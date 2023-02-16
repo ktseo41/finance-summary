@@ -1,13 +1,15 @@
 name: daily-cron
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '15 2 * * *'
 jobs:
   cron:
     runs-on: ubuntu-latest
+    env:
+      API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
     steps:
       - name: Call our API route
         run: |
           curl --request POST \
           --url 'https://finance-summary.vercel.app/api/cron' \
-          --header 'Authorization: Bearer ${{ secrets.API_SECRET_KEY }}'
+          --header "Authorization: Bearer $env:API_SECRET_KEY"
